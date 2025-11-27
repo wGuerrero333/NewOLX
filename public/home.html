@@ -41,6 +41,7 @@
 
 <section id="ventas-container" class="grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; padding:20px;">
 </section>
+<!-- este div con display:none se mantiene oculto hasta que en js se le da display: block -->
 <div id="no-data" style="text-align:center; color:#777; display:none;">No se encontraron resultados.</div>
 
                 
@@ -78,14 +79,14 @@
                 </div>
                 
                 <div class="categories-grid">
-                    <a href="#" class="category-card">
+                    <a id="category-card-id" class="category-card">
                         <div class="category-icon" style="background-color: #dbeafe; color: #2563eb;">📱</div>
                         <div class="category-info">
                             <h3>Electrónicos</h3>
                             <p class="category-count">2,342 artículos</p>
                         </div>
                     </a>
-                    <a href="#" class="category-card">
+                    <a class="category-card">
                         <div class="category-icon" style="background-color: #dcfce7; color: #16a34a;">🏠</div>
                         <div class="category-info">
                             <h3>Muebles</h3>
@@ -93,14 +94,14 @@
                         </div>
                     </a>
                   
-                    <a href="#" class="category-card">
+                    <a class="category-card">
                         <div class="category-icon" style="background-color: #f3e8ff; color: #9333ea;">👕</div>
                         <div class="category-info">
                             <h3>Ropa</h3>
                             <p class="category-count">3,124 artículos</p>
                         </div>
                     </a>
-                    <a href="#" class="category-card">
+                    <a  class="category-card">
                         <div class="category-icon" style="background-color: #fef3c7; color: #d97706;">📚</div>
                         <div class="category-info">
                             <h3>Libros</h3>
@@ -203,6 +204,19 @@
     </footer>
 
 <script>
+
+// Seleccionar todos los elementos de categoría
+const categorias = document.querySelectorAll('#category-card-id');
+
+categorias.forEach(card => {
+    card.addEventListener('click', () => {
+        console.log('Categoría clickeada:', card.querySelector('h3').innerText);
+    });
+});
+</script>
+
+
+<script>
     async function obtenerVentas() {
   const res = await fetch('/api/ventas');
   const data = await res.json();
@@ -215,6 +229,7 @@ function renderVentas(ventas) {
   cont.innerHTML = '';
 // si no hay ventas muestra el mensaje de no data
   if (!ventas || ventas.length === 0) {
+    // Mostrar mensaje de no hay datos 
     noData.style.display = 'block';
     return;
   }
@@ -245,14 +260,14 @@ function renderVentas(ventas) {
 async function inicializarBusqueda() {
   const searchInput = document.getElementById('search-bar');
   let ventas = [];
-
+// cargar todas las ventas inicialmente
   try {
     ventas = await obtenerVentas();
     renderVentas(ventas);
   } catch (err) {
     console.error('Error cargando ventas:', err);
   }
-
+// filtrar ventas al escribir en el buscador
   searchInput.addEventListener('input', (e) => {
     const query = e.target.value.toLowerCase().trim();
     const filtradas = ventas.filter(v => 
@@ -264,9 +279,10 @@ async function inicializarBusqueda() {
     renderVentas(filtradas);
   });
 }
-
+// cuando se carga al DOM SE INICIA LA BUSQUEDA
 document.addEventListener('DOMContentLoaded', inicializarBusqueda);
 </script>
+
    
 </body>
 </html>
