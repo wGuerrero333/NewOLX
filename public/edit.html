@@ -131,8 +131,7 @@ function textareaHTML(label, id, value) {
     form.innerHTML = "<p>Error: Parámetros inválidos</p>";
     return;
   }
-
-  //  1️⃣ OBTENER DATOS EXISTENTES 
+  //   OBTENER DATOS EXISTENTES 
   document.getElementById("backBtn").href = `/detail?type=${type}&id=${id}`;
 
   let data = {};
@@ -142,7 +141,6 @@ function textareaHTML(label, id, value) {
   if (type === "suscripcion") {
     res = await fetch(`/api/suscripciones/${id}`);
     data = await res.json();
-
     form.innerHTML = `
       ${fieldHTML("Nombre", "nombre", data.nombre)}
       ${fieldHTML("Email", "email", data.email, "email")}
@@ -158,11 +156,9 @@ function textareaHTML(label, id, value) {
       <button type="submit">Guardar Cambios</button>
     `;
   }
-
   else if (type === "venta") {
     res = await fetch(`/api/ventas/${id}`);
     data = await res.json();
-
     form.innerHTML = `
       ${fieldHTML("Título", "titulo", data.titulo)}
       ${textareaHTML("Descripción", "descripcion", data.descripcion)}
@@ -209,7 +205,7 @@ function textareaHTML(label, id, value) {
         body: JSON.stringify(dataSend)
       });
     }
-// API VENTAS NO SE HA PRORAMADO
+
     else if (type === "venta") {
       const formData = new FormData(form);
       result = await fetch(`/api/ventas/${id}`, {

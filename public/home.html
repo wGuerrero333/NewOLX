@@ -70,7 +70,6 @@
                                 <div class="category-icon" style="background-color: #fef3c7; color: #d97706;">📚</div>
                                 <div class="category-info">
                                     <h3>Libros</h3>
-
                                 </div>
                             </a>
                             <a class="category-card">
@@ -78,20 +77,15 @@
                                 </div>
                                 <div class="category-info">
                                     <h3>Otros</h3>
-
                                 </div>
                             </a>
-
                         </div>
                     </div>
                 </section>
                 <!-- search bar -->
-
                 <div class="search-bar">
                     <input type="text" id="search-bar" class="search-input" placeholder="¿Qué estás buscando?">
-
                 </div>
-
                 <!-- Products Section -->
 
                 <section id="ventas-container" class="grid"
@@ -170,15 +164,7 @@
                     <p>El mercado confiable para comprar, vender e intercambiar artículos en tu comunidad local.</p>
                 </div>
 
-                <div class="footer-section">
-                    <h4>Enlaces Rápidos</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Explorar Artículos</a></li>
-                        <li><a href="#">Categorías</a></li>
-                        <li><a href="#">Cómo Funciona</a></li>
-                        <li><a href="#">Consejos de Seguridad</a></li>
-                    </ul>
-                </div>
+
 
                 <div class="footer-section">
                     <h4>Soporte</h4>
@@ -219,13 +205,10 @@
             // leer el valor del input quitandole espacio en blanco con trim()
             const correo = correoInput.value.trim();
 
-
             function validarEmail(email) {
                 const regex = /\S+@\S+/;
                 return regex.test(email);
             }
-
-
             if (!correo || !validarEmail(correo)) {
                 Swal.fire({
                     title: " e- mail Invalido ingresalo de nuevo ",
@@ -234,7 +217,7 @@
                 });
                 return;
             }
-
+            // fetch para enviar el correo al servidor por la ruta de la api
             try {
                 const response = await fetch("/api/correo", {
                     method: "POST",
@@ -282,6 +265,7 @@
 
 
     <script>
+        // funcion para obtener las ventas desde la api haciendo fetch
         async function obtenerVentas() {
             const res = await fetch('/api/ventas');
             const data = await res.json();

@@ -70,7 +70,7 @@
                 <a href="#how-it-works">Cómo Funciona</a>
             </nav> -->
             <div class="header-actions">
-                <a href="formVenta.html" class="btn btn-outline">+ Vender Artículo</a>
+                <a href="formVenta.html" class="btn btn-outline">+ Publicar Artículo</a>
            
             </div>
         </div>
@@ -121,7 +121,7 @@ document.getElementById('suscripcionForm').addEventListener('submit', async (e) 
     });
     const json = await res.json();
     if (res.ok) {
-      // redirigir a la página de detalle
+      // redirigir a la página de detalle.html
       
       window.location.href = `/detail?type=suscripcion&id=${json.id}`;
     } else {

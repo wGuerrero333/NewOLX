@@ -119,7 +119,7 @@
 
 
   <div class="card" id="card">
-s
+
     <div id="content">Cargando...</div>
 <!-- AQUI IRIA boton de editar -->
 
@@ -156,7 +156,6 @@ s
       return { type: params.get('type'), id: params.get('id') };
     }
 // plantilla para renderizar cada campo
-
     function renderField(label, value) {
       return `
         <div class="field">
@@ -177,7 +176,6 @@ s
 // intentar obtener y mostrar los datos según el tipo
       try {
         let res, data;
-
         // si  type=suscripción hace esto 
         if (type === 'suscripcion') {
           res = await fetch(`/api/suscripciones/${id}`);
@@ -256,16 +254,13 @@ document.addEventListener("DOMContentLoaded", () => {
       const res = await fetch(`/api/ventas/${id}`, {
         method: "DELETE"
       });
-
       const json = await res.json();
-
       if (res.ok) {
         alert("Producto eliminado correctamente");
         window.location.href = "/"; // Redirige al home
       } else {
         alert(json.error || "Error al eliminar el producto");
       }
-
     } catch (err) {
       console.error(err);
       alert("Error de red");

@@ -24,8 +24,11 @@ const getVenta = async (req, res) => {
 const postVentas = async (req, res) => {
   try {
     const { titulo, descripcion, precio, categoria, ubicacion } = req.body;
+    // Carpeta "uploads" donde se alojaran las imagenes de los productos
+    // operador ternario para verificar si se subio una imagen
     const imagen = req.file ? '/uploads/' + req.file.filename : null;
-
+    
+// campos requeridos verificacion
     if (!titulo || precio == null || !categoria) {
       return res.status(400).json({ error: 'Faltan campos requeridos' });
     }
