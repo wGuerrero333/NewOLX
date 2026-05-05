@@ -8,3 +8,5 @@ TAMBIEN HACE
 Testeo de rutas y funciones  con 
 jest": "^30.2.0",crea funciones y rutas mock para testear funcionamiento 
     "supertest": "^7.2.2 funciona OK
+
+    REVISION FINAL
