@@ -1,139 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario</title>
-<!-- estilo del header y footer -->
+    <title>Formulario de Suscripción — GRUPO PS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <!-- estilo del solo form -->
-      <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-        }
-
-        h1 {
-            color: #333;
-        }
-
-        .form {
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: auto;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        input[type="submit"] {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #218838;
-        }
-    </style>
-
 </head>
-<header class="header">
-    <div class="container">
-        <div class="header-content">
-            <a href="/" class="logo">GRUPO PS</a>
-            <!-- <nav class="nav">
-                <a href="#browse">Explorar</a>
-                <a href="#categories">Categorías</a>
-                <a href="#how-it-works">Cómo Funciona</a>
-            </nav> -->
-            <div class="header-actions">
-                <a href="formVenta.html" class="btn btn-outline">+ Publicar Artículo</a>
-           
+
+<body class="form-page">
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">GRUPO PS</a>
+                <div class="header-actions">
+                    <a href="formVenta.html" class="btn btn-outline">+ Publicar Artículo</a>
+                </div>
             </div>
         </div>
+    </header>
+
+    <h1 class="page-title">Formulario de Suscripción</h1>
+
+    <div class="form-container">
+        <form id="suscripcionForm" class="form">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="mensaje">Mensaje:</label>
+            <textarea id="mensaje" name="mensaje" rows="2"></textarea>
+
+            <label for="role">Rol:</label>
+            <select id="role" name="role" required>
+                <option value="usuario" selected>Usuario</option>
+                <option value="miembro">Miembro</option>
+                <option value="administrador">Administrador</option>
+            </select>
+
+            <input type="submit" value="Enviar">
+        </form>
     </div>
-</header>
-
-<body>
-    <h1>Formulario de subscription</h1>
-  <form id="suscripcionForm" class="form">
-  <label for="nombre">Nombre:</label>
-  <input type="text" id="nombre" name="nombre" required>
-
-  <label for="email">Email:</label>
-  <input type="email" id="email" name="email" required>
-
-  <label for="mensaje">Mensaje:</label>
-  <textarea id="mensaje" name="mensaje" rows="2" ></textarea>
-
-  <label for="role">Rol:</label>
-<select id="role" name="role" required>
-  <option value="usuario" selected>Usuario</option>
-  <option value="miembro">Miembro</option>
-  <option value="administrador">Administrador</option>
-</select>
-
-
-
-  <input type="submit" value="Enviar">
-  
-</form>
-
-<script>
-document.getElementById('suscripcionForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  // trim() eliminar los espacios en blanco del inicio y del final de una cadena de texto
-  const data = {
-    nombre: document.getElementById('nombre').value.trim(),
-    email: document.getElementById('email').value.trim(),
-    mensaje: document.getElementById('mensaje').value.trim(),
-        role: document.getElementById('role').value // se agrego role
-  };
-  // en vez de hacer en el form action="/api/suscripciones" method="POST" hacemos fetch 
-  try {
-    const res = await fetch('/api/suscripciones', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' }, // con estos headres no se podria subir img
-      body: JSON.stringify(data)
-    });
-    const json = await res.json();
-    if (res.ok) {
-      // redirigir a la página de detalle.html
-      
-      window.location.href = `/detail?type=suscripcion&id=${json.id}`;
-    } else {
-      alert(json.error || 'Error al enviar');
-    }
-  } catch (err) {
-    console.error(err);
-    alert('Error de red');
-  }
-});
-</script>
-
 
     <footer class="footer">
         <div class="container">
@@ -183,6 +95,34 @@ document.getElementById('suscripcionForm').addEventListener('submit', async (e) 
             </div>
         </div>
     </footer>
+
+    <script>
+        document.getElementById('suscripcionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = {
+                nombre: document.getElementById('nombre').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                mensaje: document.getElementById('mensaje').value.trim(),
+                role: document.getElementById('role').value
+            };
+            try {
+                const res = await fetch('/api/suscripciones', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const json = await res.json();
+                if (res.ok) {
+                    window.location.href = `/detail?type=suscripcion&id=${json.id}`;
+                } else {
+                    alert(json.error || 'Error al enviar');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Error de red');
+            }
+        });
+    </script>
 </body>
 
 </html>
