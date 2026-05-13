@@ -34,3 +34,4 @@ app.use("/api/correo", require("./routes/correo.routes"))
 // Escuchar en el puerto 3000
 
 app.listen(3000, () => console.log("Servidor en http://localhost:3000"));
+

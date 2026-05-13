@@ -4,7 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GRUPO PS - Compra, Vende e Intercambia Cualquier Cosa</title>
+    <title>GRUPO PS — Compra, Vende e Intercambia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -15,7 +18,6 @@
             <div class="header-content">
                 <a href="/" class="logo">GRUPO PS</a>
                 <nav class="nav">
-
                     <a href="#categories">Categorías</a>
                     <a href="#how-it-works">Cómo Funciona</a>
                 </nav>
@@ -35,72 +37,62 @@
                 <p>Únete a miles de personas comprando, vendiendo e intercambiando artículos en tu comunidad local.
                     Desde electrónicos hasta muebles, encuentra grandes ofertas o intercambia por lo que necesitas.</p>
 
-                <!-- Categories Section -->
-                <section class="section section-muted" id="categories">
-                    <div class="container">
-                        <div class="section-header">
-                            <h2 class="section-title">Explorar por Categoría</h2>
-                            <p class="section-description">Descubre artículos en las categorías que más te interesan</p>
-                        </div>
-
-                        <div class="categories-grid">
-                            <a id="category-card-id" class="category-card">
-                                <div class="category-icon" style="background-color: #dbeafe; color: #2563eb;">📱</div>
-                                <div class="category-info">
-                                    <h3>Electronica</h3>
-
-                                </div>
-                            </a>
-                            <a class="category-card">
-                                <div class="category-icon" style="background-color: #dcfce7; color: #16a34a;">🏠</div>
-                                <div class="category-info">
-                                    <h3>Muebles</h3>
-
-                                </div>
-                            </a>
-
-                            <a class="category-card">
-                                <div class="category-icon" style="background-color: #f3e8ff; color: #9333ea;">👕</div>
-                                <div class="category-info">
-                                    <h3>Ropa</h3>
-
-                                </div>
-                            </a>
-                            <a class="category-card">
-                                <div class="category-icon" style="background-color: #fef3c7; color: #d97706;">📚</div>
-                                <div class="category-info">
-                                    <h3>Libros</h3>
-                                </div>
-                            </a>
-                            <a class="category-card">
-                                <div class="category-icon" style="background-color: #e0e7ff; color: #4f46e5;">🎮 🔧 📷
-                                </div>
-                                <div class="category-info">
-                                    <h3>Otros</h3>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </section>
-                <!-- search bar -->
+                <!-- Search Bar -->
                 <div class="search-bar">
                     <input type="text" id="search-bar" class="search-input" placeholder="¿Qué estás buscando?">
                 </div>
-                <!-- Products Section -->
 
-                <section id="ventas-container" class="grid"
-                    style="display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; padding:20px;">
+                <!-- Categories Section -->
+                <section class="section" id="categories">
+                    <div class="section-header">
+                        <h2 class="section-title">Explorar por Categoría</h2>
+                        <p class="section-description">Descubre artículos en las categorías que más te interesan</p>
+                    </div>
+
+                    <div class="categories-grid">
+                        <a class="category-card">
+                            <div class="category-icon">📱</div>
+                            <div class="category-info">
+                                <h3>Electrónica</h3>
+                            </div>
+                        </a>
+                        <a class="category-card">
+                            <div class="category-icon">🏠</div>
+                            <div class="category-info">
+                                <h3>Muebles</h3>
+                            </div>
+                        </a>
+                        <a class="category-card">
+                            <div class="category-icon">👕</div>
+                            <div class="category-info">
+                                <h3>Ropa</h3>
+                            </div>
+                        </a>
+                        <a class="category-card">
+                            <div class="category-icon">📚</div>
+                            <div class="category-info">
+                                <h3>Libros</h3>
+                            </div>
+                        </a>
+                        <a class="category-card">
+                            <div class="category-icon">🎮</div>
+                            <div class="category-info">
+                                <h3>Otros</h3>
+                            </div>
+                        </a>
+                    </div>
                 </section>
-                <!-- este div con display:none se mantiene oculto hasta que en js se le da display: block -->
-                <div id="no-data" style="text-align:center; color:#777; display:none;">No se encontraron resultados.
-                </div>
 
+                <!-- Products Section -->
+                <section id="ventas-container" class="grid"></section>
+                <div id="no-data" class="text-center text-muted" style="display:none;">No se encontraron resultados.</div>
 
                 <div class="hero-actions">
-                    <a href="ventas.html" class="btn btn-primary">Explorar todos los productos→</a>
+                    <a href="ventas.html" class="btn btn-primary">Explorar todos los productos →</a>
                     <a href="formVenta.html" class="btn btn-outline">Publica tu Artículo</a>
                 </div>
 
+                <!-- Features -->
                 <div class="hero-features">
                     <div class="feature">
                         <div class="feature-icon">👥</div>
@@ -164,8 +156,6 @@
                     <p>El mercado confiable para comprar, vender e intercambiar artículos en tu comunidad local.</p>
                 </div>
 
-
-
                 <div class="footer-section">
                     <h4>Soporte</h4>
                     <ul class="footer-links">
@@ -197,12 +187,12 @@
             </div>
         </div>
     </footer>
-    <!-- swett alert -->
+
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.getElementById("correoBtn").addEventListener("click", async () => {
             const correoInput = document.getElementById("correo");
-            // leer el valor del input quitandole espacio en blanco con trim()
             const correo = correoInput.value.trim();
 
             function validarEmail(email) {
@@ -217,7 +207,6 @@
                 });
                 return;
             }
-            // fetch para enviar el correo al servidor por la ruta de la api
             try {
                 const response = await fetch("/api/correo", {
                     method: "POST",
@@ -243,9 +232,6 @@
             }
         });
 
-    </script>
-
-    <script>
         document.querySelectorAll('.category-card').forEach(card => {
             card.addEventListener('click', async () => {
                 const categoria = card.querySelector('h3').innerText.toLowerCase();
@@ -254,18 +240,10 @@
                 const ventas = await res.json();
 
                 const filtradas = ventas.filter(v => v.categoria.toLowerCase() === categoria);
-                // el scope de esta funcion permite llamrla desde aqui
                 renderVentas(filtradas);
             });
         });
-    </script>
 
-
-    </script>
-
-
-    <script>
-        // funcion para obtener las ventas desde la api haciendo fetch
         async function obtenerVentas() {
             const res = await fetch('/api/ventas');
             const data = await res.json();
@@ -276,9 +254,8 @@
             const cont = document.getElementById('ventas-container');
             const noData = document.getElementById('no-data');
             cont.innerHTML = '';
-            // si no hay ventas muestra el mensaje de no data
+
             if (!ventas || ventas.length === 0) {
-                // Mostrar mensaje de no hay datos 
                 noData.style.display = 'block';
                 return;
             }
@@ -286,22 +263,19 @@
             noData.style.display = 'none';
 
             ventas.forEach(v => {
+                const imgSrc = v.imagen ? v.imagen : "https://placehold.co/600x400?text=Sin+Imagen";
                 const card = document.createElement('div');
                 card.classList.add('card');
-                card.style.background = '#fff';
-                card.style.padding = '15px';
-                card.style.borderRadius = '10px';
-                card.style.boxShadow = '0 2px 6px rgba(0,0,0,0.1)';
-
-                const imgSrc = v.imagen ? v.imagen : "https://placehold.co/600x400?text=Sin+Imagen";
                 card.innerHTML = `
-      <img src="${imgSrc}" alt="${v.titulo}" style="width:100%; height:180px; object-fit:cover; border-radius:8px;">
-      <h3 style="margin-top:10px;">${v.titulo}</h3>
-      <p style="color:#555;">${v.descripcion || ''}</p>
-      <p><strong>$${v.precio}</strong></p>
-      <p style="color:#777;">${v.categoria} - ${v.ubicacion}</p>
-      <a href="/detail?type=venta&id=${v.id}" style="text-decoration:none; color:white; background:#2563eb; padding:6px 10px; border-radius:6px;">Ver detalle</a>
-    `;
+                    <img src="${imgSrc}" alt="${v.titulo}">
+                    <div class="card-body">
+                        <h3>${v.titulo}</h3>
+                        <p>${v.descripcion || ''}</p>
+                        <div class="card-price">$${v.precio}</div>
+                        <div class="card-meta">${v.categoria} · ${v.ubicacion}</div>
+                        <a href="/detail?type=venta&id=${v.id}" class="card-link">Ver detalle</a>
+                    </div>
+                `;
                 cont.appendChild(card);
             });
         }
@@ -309,14 +283,12 @@
         async function inicializarBusqueda() {
             const searchInput = document.getElementById('search-bar');
             let ventas = [];
-            // cargar todas las ventas inicialmente
             try {
                 ventas = await obtenerVentas();
                 renderVentas(ventas);
             } catch (err) {
                 console.error('Error cargando ventas:', err);
             }
-            // filtrar ventas al escribir en el buscador
             searchInput.addEventListener('input', (e) => {
                 const query = e.target.value.toLowerCase().trim();
                 const filtradas = ventas.filter(v =>
@@ -328,11 +300,8 @@
                 renderVentas(filtradas);
             });
         }
-        // cuando se carga al DOM SE INICIA LA BUSQUEDA
         document.addEventListener('DOMContentLoaded', inicializarBusqueda);
     </script>
-
-
 </body>
 
 </html>

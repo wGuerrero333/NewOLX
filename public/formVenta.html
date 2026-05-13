@@ -1,183 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FormularioVenta</title>
-    <!-- estilo del header y footer -->
+    <title>Publicar Artículo — GRUPO PS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <!-- estilo del solo form -->
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-        }
-
-        h1 {
-            color: #333;
-        }
-
-        .form {
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: auto;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="number"],
-        select,
-        textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        input[type="submit"] {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #218838;
-        }
-    </style>
 </head>
 
-<body>
+<body class="form-page">
     <header class="header">
         <div class="container">
             <div class="header-content">
                 <a href="/" class="logo">GRUPO PS</a>
-                <nav class="nav">
-                    <!-- <a href="#browse">Explorar</a>
-                    <a href="#categories">Categorías</a>
-                    <a href="#how-it-works">Cómo Funciona</a> -->
-                </nav>
                 <div class="header-actions">
-             
                     <a href="form.html" class="btn btn-ghost">👤 Iniciar Sesión</a>
                 </div>
             </div>
         </div>
     </header>
-    <h1>Formulario de Venta</h1>
-    <!-- enctype="multipart/form-data" se agrega para poder subir la imagen-->
-    <form id="ventaForm" class="form" enctype="multipart/form-data">
-        <label for="titulo">Nombre del producto:</label>
-        <input type="text" id="titulo" name="titulo" required>
 
-        <label for="descripcion">Descripción:</label>
-        <textarea id="descripcion" name="descripcion" rows="2"></textarea>
+    <h1 class="page-title">Publicar Artículo</h1>
 
-        <label for="precio">Precio:</label>
-        <input type="number" id="precio" name="precio" required step="0.01">
+    <div class="form-container">
+        <form id="ventaForm" class="form" enctype="multipart/form-data">
+            <label for="titulo">Nombre del producto:</label>
+            <input type="text" id="titulo" name="titulo" required>
 
-        <label for="ubicacion">ubicacion:</label>
-        <textarea id="ubicacion" name="ubicacion" rows="2"></textarea>
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" name="descripcion" rows="2"></textarea>
 
-        <label for="categoria">Categoría:</label>
-        <select id="categoria" name="categoria" required>
-            <option value="electronica">Electrónica</option>
-            <option value="ropa">Ropa</option>
-            <option value="muebles">Muebles</option>
-            <option value="libros">Libros</option>
-            <option value="otros">Otros</option>
-        </select>
-    <!-- imagen format -->
-        <label>Imagen:</label>
-        <input type="file" name="imagen" id="imagen" accept="image/*">
-        <input type="submit" value="Publicar">
-    </form>
+            <label for="precio">Precio:</label>
+            <input type="number" id="precio" name="precio" required step="0.01">
 
+            <label for="ubicacion">Ubicación:</label>
+            <textarea id="ubicacion" name="ubicacion" rows="2"></textarea>
 
-    <script>
-        const form = document.getElementById('ventaForm');
-        const inputImagen = document.getElementById('imagen');
+            <label for="categoria">Categoría:</label>
+            <select id="categoria" name="categoria" required>
+                <option value="electronica">Electrónica</option>
+                <option value="ropa">Ropa</option>
+                <option value="muebles">Muebles</option>
+                <option value="libros">Libros</option>
+                <option value="otros">Otros</option>
+            </select>
 
-        // Crear contenedor para previsualización
-        const previewContainer = document.createElement('div');
-        previewContainer.style.marginTop = '10px';
-        inputImagen.insertAdjacentElement('afterend', previewContainer);
+            <label>Imagen:</label>
+            <input type="file" name="imagen" id="imagen" accept="image/*">
+            <div id="preview-container" class="form-preview"></div>
 
-        // Evento para mostrar vista previa al seleccionar imagen
-        inputImagen.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            previewContainer.innerHTML = ''; // limpia vista previa anterior
-
-            if (file) {
-                const img = document.createElement('img');
-                img.src = URL.createObjectURL(file);
-                img.style.maxWidth = '200px';
-                img.style.borderRadius = '10px';
-                img.style.marginTop = '5px';
-                img.style.boxShadow = '0 0 5px rgba(0,0,0,0.2)';
-                previewContainer.appendChild(img);
-            }
-        });
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            // crear FormData con todos los campos del form, incluyendo el archivo
-            const formData = new FormData(form);
-
-            try {
-                const res = await fetch('/api/ventas', {
-                    method: 'POST',
-                    body: formData  // ⚠️ sin headers o sino no puedo subir img, el browser los agregara automáticamente
-                });
-
-                const json = await res.json();
-                console.log(json);
-
-                if (res.ok) {
-                    // alert('Producto publicado correctamente ✅'); 
-                    // lo equivalente con sweetalert2
-                    Swal.fire({
-                        title: "Good job!",
-                        text: "Articulo publicado!",
-                        icon: "success"
-                    });
-                    // redirigir al detalle del nuevo producto
-                    window.location.href = `/detail?type=venta&id=${json.id}`;
-
-                } else {
-                    alert(json.error || 'Error al publicar');
-
-                }
-            } catch (err) {
-                console.error(err);
-                // alert('Error de red ❌');
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Something went wrong!",
-                    footer: '<a href="#">Why do I have this issue?</a>'
-                });
-            }
-        });
-    </script>
-
-    <br><br>
-    <div id="productos-container" class="productos-container">
+            <input type="submit" value="Publicar">
+        </form>
     </div>
 
     <footer class="footer">
@@ -186,15 +62,6 @@
                 <div class="footer-section">
                     <h3>GRUPO PS</h3>
                     <p>El mercado confiable para comprar, vender e intercambiar artículos en tu comunidad local.</p>
-                </div>
-                <div class="footer-section">
-                    <!-- <h4>Enlaces Rápidos</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Explorar Artículos</a></li>
-                        <li><a href="#">Categorías</a></li>
-                        <li><a href="#">Cómo Funciona</a></li>
-                        <li><a href="#">Consejos de Seguridad</a></li> -->
-                    </ul>
                 </div>
 
                 <div class="footer-section">
@@ -227,12 +94,59 @@
             </div>
         </div>
     </footer>
-    <!-- <script src="index.js"></script> -->
-    <!-- Asi captura y crea la card producto pero no postea -->
-     
- <!-- Incluir SweetAlert2 desde CDN  -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const form = document.getElementById('ventaForm');
+        const inputImagen = document.getElementById('imagen');
+        const previewContainer = document.getElementById('preview-container');
+
+        inputImagen.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            previewContainer.innerHTML = '';
+
+            if (file) {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                previewContainer.appendChild(img);
+            }
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+
+            try {
+                const res = await fetch('/api/ventas', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const json = await res.json();
+                console.log(json);
+
+                if (res.ok) {
+                    Swal.fire({
+                        title: "Good job!",
+                        text: "Articulo publicado!",
+                        icon: "success"
+                    });
+                    window.location.href = `/detail?type=venta&id=${json.id}`;
+                } else {
+                    alert(json.error || 'Error al publicar');
+                }
+            } catch (err) {
+                console.error(err);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                    footer: '<a href="#">Why do I have this issue?</a>'
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
