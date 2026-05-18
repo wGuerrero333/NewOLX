@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Detalle</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <style>
     body {
@@ -244,11 +245,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const deleteBtn = document.getElementById("deleteBtn");
 
   deleteBtn.addEventListener("click", async () => {
-    if (!confirm("¿Seguro que deseas eliminar este producto? Esta acción no se puede deshacer.")) {
-        return;
-    }
-// usa getParams que se definió arriba para obtener el id
     const { id } = await getParams();
+
+    const result = await Swal.fire({
+      title: "¿Eliminar producto?",
+      text: "¿Seguro que deseas eliminar este producto? Esta acción no se puede deshacer.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#dc2626",
+      cancelButtonColor: "#6b7280",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar"
+    });
+
+    if (!result.isConfirmed) return;
 
     try {
       const res = await fetch(`/api/ventas/${id}`, {

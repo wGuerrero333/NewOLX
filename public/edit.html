@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Editar</title>
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -215,7 +217,12 @@ function textareaHTML(label, id, value) {
     }
 
     if (result.ok) {
-      alert("Actualizado correctamente ✔️");
+      await Swal.fire({
+        title: "Actualizado correctamente",
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false
+      });
       window.location.href = `/detail?type=${type}&id=${id}`;
     } else {
       alert("Error al guardar edicion");

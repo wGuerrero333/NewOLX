@@ -98,44 +98,83 @@
 
   <h1>Listado de Ventas</h1>
 
+  <div class="filter-bar" style="text-align:center; margin-bottom:20px;">
+    <label for="category-filter" style="font-weight:bold; margin-right:8px;">Filtrar por categoría:</label>
+    <select id="category-filter" style="padding:8px 12px; border-radius:6px; border:1px solid #ccc;">
+      <option value="">Todas las categorías</option>
+      <option value="electronica">Electrónica</option>
+      <option value="ropa">Ropa</option>
+      <option value="muebles">Muebles</option>
+      <option value="libros">Libros</option>
+      <option value="otros">Otros</option>
+    </select>
+  </div>
+
   <div id="ventas-container" class="grid"> Ventas container </div>
   <div id="no-data" class="no-data" style="display:none;">No hay ventas registradas.</div>
 
   <script>
+    let todasLasVentas = [];
+
+    function renderVentas(ventas) {
+      const cont = document.getElementById('ventas-container');
+      const noData = document.getElementById('no-data');
+      cont.innerHTML = '';
+
+      if (!ventas || ventas.length === 0) {
+        noData.style.display = 'block';
+        return;
+      }
+
+      noData.style.display = 'none';
+
+      ventas.forEach(v => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+
+        const imgSrc = v.imagen ? v.imagen : 'https://placehold.co/600x400';
+
+        card.innerHTML = `
+          <img src="${imgSrc}" alt="Imagen del producto">
+          <div class="field"><span class="label">ID:</span> <span class="value">${v.id}</span></div>
+          <div class="field"><span class="label">Título:</span> <span class="value">${v.titulo}</span></div>
+          <div class="field"><span class="label">Descripción:</span> <span class="value">${v.descripcion}</span></div>
+          <div class="field"><span class="label">Precio:</span> <span class="value">$${v.precio}</span></div>
+          <div class="field"><span class="label">Categoría:</span> <span class="value">${v.categoria}</span></div>
+          <div class="field"><span class="label">Ubicación:</span> <span class="value">${v.ubicacion}</span></div>
+          <div class="field"><span class="label">Creado:</span> <span class="value">${v.created_at ?? ''}</span></div>
+          <a href="/detail?type=venta&id=${v.id}" class="btn">Ver detalle</a>
+        `;
+        cont.appendChild(card);
+      });
+    }
+
+    function aplicarFiltro() {
+      const categoria = document.getElementById('category-filter').value;
+      if (!categoria) {
+        renderVentas(todasLasVentas);
+      } else {
+        const filtradas = todasLasVentas.filter(v => v.categoria === categoria);
+        renderVentas(filtradas);
+      }
+    }
+
     async function cargarVentas() {
       try {
         const res = await fetch('/api/ventas');
         const data = await res.json();
 
-        const cont = document.getElementById('ventas-container');
         const noData = document.getElementById('no-data');
-        cont.innerHTML = '';
-// cuando no hay productos registrados 
+
         if (!res.ok || data.length === 0) {
           noData.style.display = 'block';
           return;
         }
-// recorre la data que devolvio la fetch de la ruta /api/ventas y crea las tarjetas de productos
-        data.forEach(v => {
-          const card = document.createElement('div');
-          card.classList.add('card');
 
-          // Si la imagen existe, usarla; de lo contrario, mostrar un placeholder
-          const imgSrc = v.imagen ? v.imagen : 'https://placehold.co/600x400';
+        todasLasVentas = data;
+        renderVentas(todasLasVentas);
 
-          card.innerHTML = `
-            <img src="${imgSrc}" alt="Imagen del producto">
-            <div class="field"><span class="label">ID:</span> <span class="value">${v.id}</span></div>
-            <div class="field"><span class="label">Título:</span> <span class="value">${v.titulo}</span></div>
-            <div class="field"><span class="label">Descripción:</span> <span class="value">${v.descripcion}</span></div>
-            <div class="field"><span class="label">Precio:</span> <span class="value">$${v.precio}</span></div>
-            <div class="field"><span class="label">Categoría:</span> <span class="value">${v.categoria}</span></div>
-            <div class="field"><span class="label">Ubicación:</span> <span class="value">${v.ubicacion}</span></div>
-            <div class="field"><span class="label">Creado:</span> <span class="value">${v.created_at ?? ''}</span></div>
-            <a href="/detail?type=venta&id=${v.id}" class="btn">Ver detalle</a>
-          `;
-          cont.appendChild(card);
-        });
+        document.getElementById('category-filter').addEventListener('change', aplicarFiltro);
       } catch (err) {
         console.error('Error al cargar ventas:', err);
       }
