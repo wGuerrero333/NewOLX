@@ -1,18 +1,19 @@
 #!/usr/bin/env node
-
+// ejecutando este file con node se lanza el proceso pensado en opencode
 const { readFileSync } = require('fs');
 const { homedir } = require('os');
 const { join } = require('path');
 
 const DEFAULT_REPO = 'wGuerrero333/NewOLX';
-
+// este token lo hice en github el publico esta alla como autorizacion 
+// el privado esta en ~/.opencode/mcp.json
 function getToken() {
   const configPath = join(homedir(), '.opencode', 'mcp.json');
   try {
     const config = JSON.parse(readFileSync(configPath, 'utf-8'));
     return config.mcpServers.github.env.GITHUB_TOKEN;
   } catch {
-    console.error('Error: No se pudo leer el token desde ~/.opencode/mcp.json');
+    console.error('Error: No se pudo leer el token desde c');
     process.exit(1);
   }
 }

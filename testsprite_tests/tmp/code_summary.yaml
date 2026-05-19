@@ -1,0 +1,215 @@
+version: "2"
+type: frontend
+tech_stack:
+  - language: JavaScript
+  - framework: Express.js 5
+  - ui_library: HTML5 + CSS3 vanilla
+  - database: MySQL
+  - other:
+    - multer (file upload)
+    - cors
+    - morgan
+    - dotenv
+routes:
+  - path: /
+    file: public/home.html
+    auth_required: false
+    description: Main marketplace homepage with product listings
+  - path: /form.html
+    file: public/form.html
+    auth_required: false
+    description: Newsletter subscription form
+  - path: /formVenta.html
+    file: public/formVenta.html
+    auth_required: false
+    description: Create new product listing form
+  - path: /detail
+    file: public/detail.html
+    auth_required: false
+    description: Product detail page (receives id query param)
+  - path: /edit.html
+    file: public/edit.html
+    auth_required: false
+    description: Edit product listing page (receives id query param)
+  - path: /ventas.html
+    file: public/ventas.html
+    auth_required: false
+    description: All sales listings page with filter by category
+  - path: /api/ventas
+    method: GET
+    file: routes/ventas.routes.js
+    auth_required: false
+    description: API endpoint to fetch all products
+  - path: /api/ventas/:id
+    method: GET
+    file: routes/ventas.routes.js
+    auth_required: false
+    description: API endpoint to fetch single product by id
+  - path: /api/ventas
+    method: POST
+    file: routes/ventas.routes.js
+    auth_required: false
+    description: API endpoint to create new product with image upload
+  - path: /api/ventas/:id
+    method: PUT
+    file: routes/ventas.routes.js
+    auth_required: false
+    description: API endpoint to update product with optional image
+  - path: /api/ventas/:id
+    method: DELETE
+    file: routes/ventas.routes.js
+    auth_required: false
+    description: API endpoint to delete product
+  - path: /api/suscripciones
+    method: GET
+    file: routes/suscripciones.routes.js
+    auth_required: false
+    description: API endpoint to fetch all subscriptions
+  - path: /api/suscripciones/:id
+    method: GET
+    file: routes/suscripciones.routes.js
+    auth_required: false
+    description: API endpoint to fetch single subscription
+  - path: /api/suscripciones
+    method: POST
+    file: routes/suscripciones.routes.js
+    auth_required: false
+    description: API endpoint to create subscription
+  - path: /api/suscripciones/:id
+    method: PUT
+    file: routes/suscripciones.routes.js
+    auth_required: false
+    description: API endpoint to update subscription
+  - path: /api/suscripciones/:id
+    method: DELETE
+    file: routes/suscripciones.routes.js
+    auth_required: false
+    description: API endpoint to delete subscription
+  - path: /api/correo
+    method: GET
+    file: routes/correo.routes.js
+    auth_required: false
+    description: API endpoint to fetch all emails
+  - path: /api/correo
+    method: POST
+    file: routes/correo.routes.js
+    auth_required: false
+    description: API endpoint to save email contact
+features:
+  - name: Browse Products on Homepage
+    description: View all listed products on the main marketplace page
+    files:
+      - public/home.html
+    entry_route: /
+    user_interactions:
+      - View product cards with images, titles, prices
+      - Click on a product to view detail page
+      - Navigate to other pages via links
+    api_calls:
+      - method: GET
+        endpoint: /api/ventas
+    auth_required: false
+  - name: Create Product Listing
+    description: Form to create a new product listing with image upload
+    files:
+      - public/formVenta.html
+      - controllers/ventas.controller.js
+      - middleware/multer.js
+    entry_route: /formVenta.html
+    user_interactions:
+      - Fill product title, description, price, category, location
+      - Upload product image file
+      - Submit form to create listing
+    api_calls:
+      - method: POST
+        endpoint: /api/ventas
+        body: FormData with titulo, descripcion, precio, categoria, ubicacion, imagen
+    auth_required: false
+  - name: View Product Detail
+    description: See full details of a single product
+    files:
+      - public/detail.html
+    entry_route: /detail
+    user_interactions:
+      - View product image, title, description, price, category, location
+    api_calls:
+      - method: GET
+        endpoint: /api/ventas/:id
+    auth_required: false
+  - name: Edit Product Listing
+    description: Edit an existing product listing
+    files:
+      - public/edit.html
+      - controllers/ventas.controller.js
+    entry_route: /edit.html
+    user_interactions:
+      - Modify product title, description, price, category, location
+      - Upload new image or keep existing
+      - Submit form to update
+    api_calls:
+      - method: PUT
+        endpoint: /api/ventas/:id
+    auth_required: false
+  - name: Delete Product Listing
+    description: Delete a product listing
+    files:
+      - public/home.html
+      - controllers/ventas.controller.js
+    entry_route: /
+    user_interactions:
+      - Click delete button on product card
+      - Confirm deletion
+    api_calls:
+      - method: DELETE
+        endpoint: /api/ventas/:id
+    auth_required: false
+  - name: Filter Products by Category
+    description: Filter product listings by category
+    files:
+      - public/ventas.html
+      - public/home.html
+    entry_route: /ventas.html
+    user_interactions:
+      - Select category filter
+      - View filtered product list
+    api_calls:
+      - method: GET
+        endpoint: /api/ventas
+    auth_required: false
+  - name: Newsletter Subscription
+    description: Subscribe to newsletter with name and email
+    files:
+      - public/form.html
+      - controllers/suscripciones.controller.js
+    entry_route: /form.html
+    user_interactions:
+      - Fill name, email, message fields
+      - Submit subscription form
+    api_calls:
+      - method: POST
+        endpoint: /api/suscripciones
+        body: nombre, email, mensaje, role
+    auth_required: false
+  - name: Save Contact Email
+    description: Save email address from contact form
+    files:
+      - controllers/correo.controller.js
+    entry_route: /form.html
+    user_interactions:
+      - Enter email address
+      - Submit contact form
+    api_calls:
+      - method: POST
+        endpoint: /api/correo
+        body: correo
+    auth_required: false
+known_limitations:
+  - issue: No authentication/authorization implemented - all CRUD operations are public
+    location: All controllers
+    impact: Anyone can create, update, or delete any product or subscription
+  - issue: Database connection required - app crashes without MySQL running
+    location: db/db.js
+    impact: App may fail if MySQL is not configured in .env
+  - issue: File uploads may fail without uploads/ directory
+    location: middleware/multer.js
+    impact: Image uploads may produce errors

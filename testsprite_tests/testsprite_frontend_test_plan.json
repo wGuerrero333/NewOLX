@@ -1,0 +1,697 @@
+[
+  {
+    "id": "TC001",
+    "title": "Browse listings on the homepage",
+    "description": "This verifies a shopper can load the marketplace homepage and see product cards rendered from the listings data.",
+    "category": "Browse Products on Homepage",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify product cards are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify product images, titles, and prices are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Browse products and open a detail page",
+    "description": "A shopper can load the homepage, see product cards, and open a product detail page successfully.",
+    "category": "Delete Product Listing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify product cards are displayed"
+      },
+      {
+        "type": "action",
+        "description": "Open an existing product from the marketplace"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product detail page is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Open a product detail from the homepage",
+    "description": "This verifies a shopper can open a listing from the homepage and see the full product detail page.",
+    "category": "Browse Products on Homepage",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click a product card"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product detail page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product image, title, description, price, category, and location are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "View a product detail page directly",
+    "description": "This verifies a shopper can open the detail page and inspect a single listing's information.",
+    "category": "View Product Detail",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /detail"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product detail page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product image, title, description, price, category, and location are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Delete a listing from the marketplace home",
+    "description": "A user can remove a product listing from the homepage and no longer see it in the marketplace list.",
+    "category": "Delete Product Listing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Select an existing product for removal"
+      },
+      {
+        "type": "action",
+        "description": "Confirm deletion"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product is removed from the marketplace list"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Navigate between marketplace pages from the homepage",
+    "description": "This verifies a shopper can move from the homepage to other marketplace pages using in-app navigation links.",
+    "category": "Browse Products on Homepage",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to the product creation form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to the sales listings page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the marketplace navigation pages are accessible from the homepage"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "Create a new product listing",
+    "description": "This verifies a seller can submit a complete listing with an image and see it reflected in the marketplace.",
+    "category": "Create Product Listing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /formVenta.html"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the product title field with a unique title"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the product description field with a valid description"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the product price field with a valid price"
+      },
+      {
+        "type": "action",
+        "description": "Select a category"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the product location field with a valid location"
+      },
+      {
+        "type": "action",
+        "description": "Upload a product image file"
+      },
+      {
+        "type": "action",
+        "description": "Submit the product listing form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new listing appears on the marketplace homepage"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new listing appears in the sales listings page"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "Update a listing and keep it visible in product details",
+    "description": "A seller can edit an existing product listing and see the updated information on the detail page.",
+    "category": "Edit Product Listing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open an existing product from the marketplace"
+      },
+      {
+        "type": "action",
+        "description": "Open the listing edit page"
+      },
+      {
+        "type": "action",
+        "description": "Modify the product title"
+      },
+      {
+        "type": "action",
+        "description": "Modify the product description"
+      },
+      {
+        "type": "action",
+        "description": "Modify the product price"
+      },
+      {
+        "type": "action",
+        "description": "Modify the product category"
+      },
+      {
+        "type": "action",
+        "description": "Modify the product location"
+      },
+      {
+        "type": "action",
+        "description": "Submit the updated listing form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated listing information is visible on the product detail page"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC009",
+    "title": "Create a listing with the minimum required information",
+    "description": "This verifies a seller can create a listing successfully using the core fields expected by the form.",
+    "category": "Create Product Listing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /formVenta.html"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the product title field with a unique title"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the product description field with a valid description"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the product price field with a valid price"
+      },
+      {
+        "type": "action",
+        "description": "Select a category"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the product location field with a valid location"
+      },
+      {
+        "type": "action",
+        "description": "Upload a product image file"
+      },
+      {
+        "type": "action",
+        "description": "Submit the product listing form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a success confirmation is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the listing is saved and available to browse"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC010",
+    "title": "Filter products by category",
+    "description": "A shopper can narrow the catalog to one category and see only matching products.",
+    "category": "Filter Products by Category",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /ventas.html"
+      },
+      {
+        "type": "action",
+        "description": "Select a category filter"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify filtered product listings are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC011",
+    "title": "Remove a listing from the category catalog",
+    "description": "A user can delete a product and confirm it no longer appears in the category-based catalog view.",
+    "category": "Delete Product Listing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /ventas.html"
+      },
+      {
+        "type": "action",
+        "description": "Select an existing product for removal"
+      },
+      {
+        "type": "action",
+        "description": "Confirm deletion"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product is removed from the catalog list"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC012",
+    "title": "Filter sales listings by category",
+    "description": "This verifies a shopper can narrow the sales list to a category and see only matching products.",
+    "category": "Browse Products on Homepage",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /ventas.html"
+      },
+      {
+        "type": "action",
+        "description": "Select a category filter"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify only listings from the selected category are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the filtered sales list is visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC013",
+    "title": "Replace a listing image while editing",
+    "description": "A seller can update an existing listing and replace its image without losing the rest of the listing details.",
+    "category": "Edit Product Listing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open an existing product from the marketplace"
+      },
+      {
+        "type": "action",
+        "description": "Open the listing edit page"
+      },
+      {
+        "type": "action",
+        "description": "Upload a new image for the listing"
+      },
+      {
+        "type": "action",
+        "description": "Submit the updated listing form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated listing is visible on the product detail page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the listing image is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC014",
+    "title": "Keep the current image when editing a listing",
+    "description": "A seller can edit listing details without replacing the existing image and still see the updated listing saved.",
+    "category": "Edit Product Listing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open an existing product from the marketplace"
+      },
+      {
+        "type": "action",
+        "description": "Open the listing edit page"
+      },
+      {
+        "type": "action",
+        "description": "Modify the product title"
+      },
+      {
+        "type": "action",
+        "description": "Modify the product description"
+      },
+      {
+        "type": "action",
+        "description": "Submit the updated listing form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated listing information is visible on the product detail page"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC015",
+    "title": "Clear a category filter to view the full catalog",
+    "description": "A shopper can change back from a filtered view to see the broader product catalog again.",
+    "category": "Filter Products by Category",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /ventas.html"
+      },
+      {
+        "type": "action",
+        "description": "Select a category filter"
+      },
+      {
+        "type": "action",
+        "description": "Clear the category filter"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the full product catalog is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC016",
+    "title": "Subscribe to the newsletter with full details",
+    "description": "A guest shopper can submit the newsletter form with name, email, and message and see the subscription saved.",
+    "category": "Newsletter Subscription",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /form.html"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the name field with a valid name"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with a valid email address"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the message field with a short message"
+      },
+      {
+        "type": "action",
+        "description": "Submit the subscription form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the subscription record is saved"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a success confirmation is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC017",
+    "title": "Submit the product form with missing required fields",
+    "description": "This verifies the product creation form blocks submission when core fields are left empty.",
+    "category": "Create Product Listing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /formVenta.html"
+      },
+      {
+        "type": "action",
+        "description": "Submit the product listing form without filling required fields"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify form validation errors are visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the listing is not created"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC018",
+    "title": "Cancel deleting a listing",
+    "description": "A user can back out of a delete confirmation and keep the listing visible in the marketplace.",
+    "category": "Delete Product Listing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Select an existing product for removal"
+      },
+      {
+        "type": "action",
+        "description": "Cancel the deletion confirmation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the product remains visible in the marketplace list"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC019",
+    "title": "Save a contact email from the contact form",
+    "description": "A user can submit an email address through the contact form and see the email saved.",
+    "category": "Save Contact Email",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /form.html"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with a valid email address"
+      },
+      {
+        "type": "action",
+        "description": "Submit the contact form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the email record is saved"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a success confirmation is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC020",
+    "title": "Accept a valid contact email submission",
+    "description": "A user can submit only an email address in the contact form and see it saved successfully.",
+    "category": "Save Contact Email",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /form.html"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with a valid email address"
+      },
+      {
+        "type": "action",
+        "description": "Submit the contact form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the email record is saved"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a success confirmation is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC021",
+    "title": "Reject an invalid newsletter email",
+    "description": "A user cannot submit the newsletter form with an invalid email format and sees a validation error instead of a saved record.",
+    "category": "Newsletter Subscription",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /form.html"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the name field with a valid name"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with an invalid email address"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the message field with a short message"
+      },
+      {
+        "type": "action",
+        "description": "Submit the subscription form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an email validation error is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the subscription is not saved"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC022",
+    "title": "Reject an empty newsletter submission",
+    "description": "A user cannot submit the newsletter form without the required details and sees validation feedback instead of a saved record.",
+    "category": "Newsletter Subscription",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /form.html"
+      },
+      {
+        "type": "action",
+        "description": "Submit the subscription form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify required field validation is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the subscription is not saved"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC023",
+    "title": "Reject an invalid contact email",
+    "description": "A user cannot save a contact email with an invalid format and sees a validation error instead of a saved record.",
+    "category": "Save Contact Email",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /form.html"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with an invalid email address"
+      },
+      {
+        "type": "action",
+        "description": "Submit the contact form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an email validation error is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the email is not saved"
+      }
+    ],
+    "priority": "Low"
+  }
+]

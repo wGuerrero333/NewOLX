@@ -1,0 +1,17 @@
+{
+  "status": "init",
+  "scope": "codebase",
+  "type": "frontend",
+  "localEndpoint": "http://localhost:3000/",
+  "serverPort": 38207,
+  "executionArgs": {
+    "projectName": "NewOLX",
+    "projectPath": "/home/wguerreroc/Documents/cloneNewOLX/NewOLX",
+    "testIds": [],
+    "additionalInstruction": "Test all frontend pages and features",
+    "serverMode": "production",
+    "envs": {
+      "API_KEY": "sk-user-RFv01QZe0lApaHZYK7GOBlqE4MGxo9pwu5knUDa8O7QL-mGhxiJPxVyY2orjZRoVEtw5Yn_bfIoM6fF7XrDUuigPANz3err73JxRdZnywCQSviPd7gCQYi5dBvlNHjdMoNE"
+    }
+  }
+}
