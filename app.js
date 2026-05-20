@@ -13,7 +13,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'home.html'));
-});
+});     
 
 app.get('/form.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'form.html'));

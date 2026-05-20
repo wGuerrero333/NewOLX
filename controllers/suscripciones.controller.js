@@ -1,42 +1,54 @@
-const pool = require('../db/db');
+const dynamo = require('../db/db');
+const crypto = require('crypto');
+const { GetCommand, PutCommand, UpdateCommand, DeleteCommand, ScanCommand } = require('@aws-sdk/lib-dynamodb');
+
+const TABLE = 'Suscripciones';
 
 const getSuscripciones = async (req, res) => {
   try {
-    const [rows] = await pool.query("SELECT * FROM suscripciones ORDER BY id DESC");
-    res.json(rows);
+    const result = await dynamo.send(new ScanCommand({ TableName: TABLE }));
+    const items = result.Items || [];
+    items.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    res.json(items);
   } catch (err) {
-    res.status(500).json({ error: "Error al obtener suscripciones" });
+    res.status(500).json({ error: 'Error al obtener suscripciones' });
   }
 };
 
 const getSuscripcion = async (req, res) => {
   try {
     const { id } = req.params;
-    const [rows] = await pool.query('SELECT * FROM suscripciones WHERE id = ?', [id]);
-    if (rows.length === 0) return res.status(404).json({ error: 'No encontrado' });
-    res.json(rows[0]);
+    const result = await dynamo.send(new GetCommand({ TableName: TABLE, Key: { id } }));
+    if (!result.Item) return res.status(404).json({ error: 'No encontrado' });
+    res.json(result.Item);
   } catch (err) {
-    console.error(err);
     res.status(500).json({ error: 'Error en el servidor' });
   }
 };
-
 
 const postSuscripcion = async (req, res) => {
   try {
     const { nombre, email, mensaje, role } = req.body;
 
-    const rolesValidos = ["administrador", "miembro", "usuario"];
-    const rolFinal = rolesValidos.includes(role) ? role : "usuario";
+    const rolesValidos = ['administrador', 'miembro', 'usuario'];
+    const rolFinal = rolesValidos.includes(role) ? role : 'usuario';
 
-    const [result] = await pool.query(
-      "INSERT INTO suscripciones (nombre, email, mensaje, role) VALUES (?, ?, ?, ?)",
-      [nombre, email, mensaje, rolFinal]
-    );
+    const id = crypto.randomUUID();
+    await dynamo.send(new PutCommand({
+      TableName: TABLE,
+      Item: {
+        id,
+        nombre,
+        email,
+        mensaje,
+        role: rolFinal,
+        createdAt: new Date().toISOString(),
+      },
+    }));
 
-    res.status(201).json({ id: result.insertId });
+    res.status(201).json({ id });
   } catch (err) {
-    res.status(500).json({ error: "Error al guardar suscripción" });
+    res.status(500).json({ error: 'Error al guardar suscripci\u00f3n' });
   }
 };
 
@@ -45,24 +57,32 @@ const updateSuscripcion = async (req, res) => {
     const { id } = req.params;
     const { nombre, email, mensaje, role } = req.body;
 
-    await pool.query(
-      "UPDATE suscripciones SET nombre=?, email=?, mensaje=?, role=? WHERE id=?",
-      [nombre, email, mensaje, role, id]
-    );
+    await dynamo.send(new UpdateCommand({
+      TableName: TABLE,
+      Key: { id },
+      UpdateExpression: 'SET nombre = :n, email = :e, mensaje = :m, #r = :r',
+      ExpressionAttributeNames: { '#r': 'role' },
+      ExpressionAttributeValues: {
+        ':n': nombre,
+        ':e': email,
+        ':m': mensaje,
+        ':r': role,
+      },
+    }));
 
     res.json({ updated: true });
   } catch (err) {
-    res.status(500).json({ error: "Error al actualizar suscripción" });
+    res.status(500).json({ error: 'Error al actualizar suscripci\u00f3n' });
   }
 };
 
 const deleteSuscripcion = async (req, res) => {
   try {
     const { id } = req.params;
-    await pool.query("DELETE FROM suscripciones WHERE id=?", [id]);
+    await dynamo.send(new DeleteCommand({ TableName: TABLE, Key: { id } }));
     res.json({ deleted: true });
   } catch (err) {
-    res.status(500).json({ error: "Error al eliminar suscripción" });
+    res.status(500).json({ error: 'Error al eliminar suscripci\u00f3n' });
   }
 };
 
@@ -71,5 +91,5 @@ module.exports = {
   getSuscripcion,
   postSuscripcion,
   updateSuscripcion,
-  deleteSuscripcion
+  deleteSuscripcion,
 };

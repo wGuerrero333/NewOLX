@@ -1,19 +1,17 @@
-// MOCK DE LA BASE DE DATOS (DEBE IR PRIMERO)
 jest.mock('../db/db', () => ({
-  query: jest.fn()
+  send: jest.fn(),
 }));
 
-const pool = require('../db/db');
+const dynamo = require('../db/db');
 
 const {
   getVentas,
   getVenta,
   postVentas,
   updateVenta,
-  deleteVenta
+  deleteVenta,
 } = require('../controllers/ventas.controller');
 
-// Helper para mock de res
 const mockResponse = () => {
   const res = {};
   res.status = jest.fn().mockReturnValue(res);
@@ -22,27 +20,22 @@ const mockResponse = () => {
 };
 
 describe('Controlador Ventas', () => {
-
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  // ============================
-  // GET ALL
-  // ============================
   test('getVentas → devuelve lista de ventas', async () => {
     const req = {};
     const res = mockResponse();
 
-    pool.query.mockResolvedValue([[{ id: 1, titulo: 'Producto 1' }]]);
+    dynamo.send.mockResolvedValue({
+      Items: [{ id: '1', titulo: 'Producto 1' }],
+    });
 
     await getVentas(req, res);
 
-    expect(pool.query).toHaveBeenCalledWith(
-      "SELECT * FROM ventas ORDER BY id DESC"
-    );
     expect(res.json).toHaveBeenCalledWith([
-      { id: 1, titulo: 'Producto 1' }
+      { id: '1', titulo: 'Producto 1' },
     ]);
   });
 
@@ -50,38 +43,34 @@ describe('Controlador Ventas', () => {
     const req = {};
     const res = mockResponse();
 
-    pool.query.mockRejectedValue(new Error('DB error'));
+    dynamo.send.mockRejectedValue(new Error('DB error'));
 
     await getVentas(req, res);
 
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith({
-      error: "Error al obtener ventas"
+      error: 'Error al obtener ventas',
     });
   });
 
-  // ============================
-  // GET BY ID
-  // ============================
   test('getVenta → devuelve una venta', async () => {
-    const req = { params: { id: 1 } };
+    const req = { params: { id: '1' } };
     const res = mockResponse();
 
-    pool.query.mockResolvedValue([[{ id: 1, titulo: 'Producto X' }]]);
+    dynamo.send.mockResolvedValue({
+      Item: { id: '1', titulo: 'Producto X' },
+    });
 
     await getVenta(req, res);
 
-    expect(res.json).toHaveBeenCalledWith({
-      id: 1,
-      titulo: 'Producto X'
-    });
+    expect(res.json).toHaveBeenCalledWith({ id: '1', titulo: 'Producto X' });
   });
 
   test('getVenta → 404 si no existe', async () => {
-    const req = { params: { id: 99 } };
+    const req = { params: { id: '99' } };
     const res = mockResponse();
 
-    pool.query.mockResolvedValue([[]]);
+    dynamo.send.mockResolvedValue({ Item: undefined });
 
     await getVenta(req, res);
 
@@ -89,36 +78,33 @@ describe('Controlador Ventas', () => {
     expect(res.json).toHaveBeenCalledWith({ error: 'No encontrado' });
   });
 
-  // ============================
-  // POST
-  // ============================
   test('postVentas → crea venta correctamente', async () => {
     const req = {
       body: {
         titulo: 'Laptop',
         descripcion: 'Buena',
         precio: 2000,
-        categoria: 'Tecnología',
-        ubicacion: 'Bogotá'
+        categoria: 'Tecnolog\u00eda',
+        ubicacion: 'Bogot\u00e1',
       },
-      file: { filename: 'img.jpg' }
+      file: { filename: 'img.jpg' },
     };
     const res = mockResponse();
 
-    pool.query.mockResolvedValue([{ insertId: 5 }]);
+    dynamo.send.mockResolvedValue({});
 
     await postVentas(req, res);
 
     expect(res.status).toHaveBeenCalledWith(201);
-    expect(res.json).toHaveBeenCalledWith({ id: 5 });
+    expect(res.json).toHaveBeenCalledWith({ id: expect.any(String) });
   });
 
   test('postVentas → 400 si faltan campos requeridos', async () => {
     const req = {
       body: {
-        descripcion: 'Sin título',
-        precio: 100
-      }
+        descripcion: 'Sin t\u00edtulo',
+        precio: 100,
+      },
     };
     const res = mockResponse();
 
@@ -126,50 +112,43 @@ describe('Controlador Ventas', () => {
 
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
-      error: 'Faltan campos requeridos'
+      error: 'Faltan campos requeridos',
     });
   });
 
-  // ============================
-  // PUT
-  // ============================
   test('updateVenta → actualiza venta sin nueva imagen', async () => {
     const req = {
-      params: { id: 1 },
+      params: { id: '1' },
       body: {
-        titulo: 'Nuevo título',
+        titulo: 'Nuevo t\u00edtulo',
         descripcion: 'Actualizado',
         precio: 300,
         categoria: 'Hogar',
-        ubicacion: 'Medellín'
-      }
+        ubicacion: 'Medell\u00edn',
+      },
     };
     const res = mockResponse();
 
-    pool.query
-      .mockResolvedValueOnce([[{ imagen: '/uploads/old.jpg' }]]) // SELECT
-      .mockResolvedValueOnce([{}]); // UPDATE
+    dynamo.send
+      .mockResolvedValueOnce({ Item: { imagen: '/uploads/old.jpg' } })
+      .mockResolvedValueOnce({});
 
     await updateVenta(req, res);
 
     expect(res.json).toHaveBeenCalledWith({
-      message: "Actualizado correctamente",
-      imagen: '/uploads/old.jpg'
+      message: 'Actualizado correctamente',
+      imagen: '/uploads/old.jpg',
     });
   });
 
-  // ============================
-  // DELETE
-  // ============================
   test('deleteVenta → elimina venta', async () => {
-    const req = { params: { id: 1 } };
+    const req = { params: { id: '1' } };
     const res = mockResponse();
 
-    pool.query.mockResolvedValue([{}]);
+    dynamo.send.mockResolvedValue({});
 
     await deleteVenta(req, res);
 
     expect(res.json).toHaveBeenCalledWith({ deleted: true });
   });
-
 });
