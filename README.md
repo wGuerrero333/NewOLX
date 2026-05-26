@@ -1,5 +1,8 @@
 # NewOLX
 
+![CI](https://github.com/wGuerrero333/NewOLX/actions/workflows/ci.yml/badge.svg)
+![Deploy](https://github.com/wGuerrero333/NewOLX/actions/workflows/deploy.yml/badge.svg)
+
 Plataforma que emula **OLX** — venta de productos clasificados por categoría.
 
 ## Stack
