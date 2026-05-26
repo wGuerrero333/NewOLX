@@ -197,23 +197,7 @@
             renderField('Email', data.email),
             renderField('Mensaje', data.mensaje),
             renderField('Rol', roleHTML),
-            renderField('Creado', data.created_at)
-          ].join('');
-// insertar el html en el contenedor
-          document.getElementById('content').innerHTML = html;
-        }
-
-        //  si por el contrario el type=venta hace lo mismo pero con la data de venta
-        else if (type === 'venta') {
-          res = await fetch(`/api/ventas/${id}`);
-          data = await res.json();
-          if (!res.ok) throw data;
-
-          document.getElementById('title').innerText = 'Detalle Venta: ' + id;
-// si hay imagen mostrarla, si no mostrar texto indicando que no hay imagen
-          const imgHTML = data.imagen
-            ? `<img src="${data.imagen}" alt="Imagen del producto NO Dosponible" class="detail-img">`
-            : '<span style="color:#9ca3af;">Sin imagen disponible</span>';
+            renderField('Creado', data.createdAt ? new Date(data.createdAt).toLocaleDateString('en-GB') : '')
 
           const html = [
             renderField('ID', data.id),
@@ -223,7 +207,7 @@
             renderField('Categoría', data.categoria),
             renderField('Ubicación', data.ubicacion),
             renderField('Imagen', imgHTML),
-            renderField('Creado', data.created_at)
+            renderField('Creado', data.createdAt ? new Date(data.createdAt).toLocaleDateString('en-GB') : '')
           ].join('');
 
           document.getElementById('content').innerHTML = html;

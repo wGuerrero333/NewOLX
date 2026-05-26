@@ -142,7 +142,7 @@
           <div class="field"><span class="label">Precio:</span> <span class="value">$${v.precio}</span></div>
           <div class="field"><span class="label">Categoría:</span> <span class="value">${v.categoria}</span></div>
           <div class="field"><span class="label">Ubicación:</span> <span class="value">${v.ubicacion}</span></div>
-          <div class="field"><span class="label">Creado:</span> <span class="value">${v.created_at ?? ''}</span></div>
+          <div class="field"><span class="label">Creado:</span> <span class="value">${v.createdAt ? new Date(v.createdAt).toLocaleDateString('en-GB') : ''}</span></div>
           <a href="/detail?type=venta&id=${v.id}" class="btn">Ver detalle</a>
         `;
         cont.appendChild(card);
