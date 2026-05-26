@@ -3,6 +3,11 @@
 ![CI](https://github.com/wGuerrero333/NewOLX/actions/workflows/ci.yml/badge.svg)
 ![Deploy](https://github.com/wGuerrero333/NewOLX/actions/workflows/deploy.yml/badge.svg)
 
+GITHUB ACCION CONFIGURADAS 1.  HACE TEST CI , 2. ACTUALIZA EL DEPLOY EN AWS 
+SOLO PERMITE PR AL MAIN
+
+Y 
+
 Plataforma que emula **OLX** — venta de productos clasificados por categoría.
 
 ## Stack
