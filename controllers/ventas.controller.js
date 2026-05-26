@@ -28,8 +28,7 @@ const getVenta = async (req, res) => {
 
 const postVentas = async (req, res) => {
   try {
-    const { titulo, descripcion, precio, categoria, ubicacion } = req.body;
-    const imagen = req.file ? '/uploads/' + req.file.filename : null;
+    const { titulo, descripcion, precio, categoria, ubicacion, imagen } = req.body;
 
     if (!titulo || precio == null || !categoria) {
       return res.status(400).json({ error: 'Faltan campos requeridos' });
@@ -65,7 +64,7 @@ const updateVenta = async (req, res) => {
     if (!current.Item) return res.status(404).json({ error: 'No encontrado' });
 
     const imagenActual = current.Item.imagen;
-    const nuevaImagen = req.file ? `/uploads/${req.file.filename}` : imagenActual;
+    const nuevaImagen = req.body.imagen || imagenActual;
 
     await dynamo.send(new UpdateCommand({
       TableName: TABLE,

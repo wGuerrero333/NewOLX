@@ -96,7 +96,7 @@
 <h1 id="title">Editar</h1>
 
 <div class="card">
-  <form id="editForm" enctype="multipart/form-data"></form>
+  <form id="editForm"></form>
 
   <a id="backBtn" href="/" class="back-btn">⬅ Volver</a>
 </div>
@@ -209,10 +209,27 @@ function textareaHTML(label, id, value) {
     }
 
     else if (type === "venta") {
-      const formData = new FormData(form);
+      const titulo = document.getElementById("titulo").value;
+      const descripcion = document.getElementById("descripcion").value;
+      const precio = document.getElementById("precio").value;
+      const categoria = document.getElementById("categoria").value;
+      const ubicacion = document.getElementById("ubicacion").value;
+      const fileInput = document.getElementById("imagen");
+
+      let imagen = null;
+      if (fileInput && fileInput.files[0]) {
+        const file = fileInput.files[0];
+        const ext = file.name.substring(file.name.lastIndexOf('.'));
+        const presignedRes = await fetch(`/api/uploads/presigned?extension=${ext}`);
+        const { url, key } = await presignedRes.json();
+        await fetch(url, { method: 'PUT', body: file });
+        imagen = `https://newolx-uploads-681432799230.s3.us-east-2.amazonaws.com/${key}`;
+      }
+
       result = await fetch(`/api/ventas/${id}`, {
         method: "PUT",
-        body: formData
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ titulo, descripcion, precio, categoria, ubicacion, imagen })
       });
     }
 
