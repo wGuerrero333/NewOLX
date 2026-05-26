@@ -4,7 +4,7 @@
 ![Deploy](https://github.com/wGuerrero333/NewOLX/actions/workflows/deploy.yml/badge.svg)
 
 GITHUB ACCION CONFIGURADAS 1.  HACE TEST CI , 2. ACTUALIZA EL DEPLOY EN AWS 
-SOLO PERMITE PR AL MAIN
+SE AGREAGO AL GITHUB RULESET QUE SOLO PERMITE PR AL MAIN
 
 Y 
 
