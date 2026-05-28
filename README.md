@@ -2,11 +2,7 @@
 
 ![CI](https://github.com/wGuerrero333/NewOLX/actions/workflows/ci.yml/badge.svg)
 ![Deploy](https://github.com/wGuerrero333/NewOLX/actions/workflows/deploy.yml/badge.svg)
-
-GITHUB ACCION CONFIGURADAS 1.  HACE TEST CI , 2. ACTUALIZA EL DEPLOY EN AWS 
-SE AGREAGO AL GITHUB RULESET QUE SOLO PERMITE PR AL MAIN
-
-Y 
+![Security](https://github.com/wGuerrero333/NewOLX/actions/workflows/security.yml/badge.svg)
 
 Plataforma que emula **OLX** — venta de productos clasificados por categoría.
 
@@ -14,34 +10,37 @@ Plataforma que emula **OLX** — venta de productos clasificados por categoría.
 
 | Capa | Tecnología |
 |------|-----------|
-| Frontend | React + HTML estático (`public/`) |
+| Frontend | HTML + CSS + JS (`public/`) |
 | Backend | Express.js v5 |
-| Base de datos | MySQL (mysql2) |
+| Base de datos | DynamoDB (AWS) |
+| Infraestructura | Lambda + API Gateway + S3 + CloudFront |
+| Imágenes | Presigned S3 URLs |
 | Testing | Jest + Supertest |
+| CI/CD | GitHub Actions |
 
 ## Estructura
 
 ```
 NewOLX/
-├── server.js              # Entry point
+├── lambda.js              # Entry point (serverless)
+├── server.js              # Entry point (local)
 ├── app.js                 # App exportable para testing
-├── config.js              # Configuración del proyecto
-├── fileToMCP.js           # Script de automatización GitHub (MCP)
+├── config.js              # Configuración
+├── fileToMCP.js           # Script MCP (GitHub Automation)
 ├── controllers/           # Lógica de negocio
 ├── routes/                # Definición de rutas API
-├── middleware/            # Middleware (multer, etc.)
-├── db/                    # Conexión a MySQL
-├── public/                # Archivos estáticos (HTML, CSS, JS)
-├── uploads/               # Imágenes subidas
-├── __test__/              # Tests de frontend
-└── __testBackend__/       # Tests de backend
+├── db/                    # DynamoDB (AWS SDK v3)
+├── public/                # Frontend estático (HTML, CSS, JS)
+├── __tests__/             # Tests frontend
+├── __testsBackend__/      # Tests backend
+└── .github/workflows/     # CI/CD pipelines
 ```
 
 ## Requisitos
 
 - Node.js >= 18
-- MySQL
 - npm
+- Cuenta AWS (DynamoDB, S3, Lambda, API Gateway, CloudFront)
 
 ## Instalación
 
@@ -49,33 +48,41 @@ NewOLX/
 npm install
 ```
 
-Configurar variables de entorno (`.env`):
+Configurar credenciales AWS vía `~/.aws/credentials` o variables de entorno:
 
 ```
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=tu_password
-DB_NAME=newolx
+AWS_ACCESS_KEY_ID=tu_access_key
+AWS_SECRET_ACCESS_KEY=tu_secret_key
+AWS_REGION=us-east-2
 ```
 
 ## Comandos
 
 | Comando | Descripción |
 |---------|-------------|
-| `npm run dev` | Iniciar servidor con nodemon (desarrollo) |
-| `npm start` | Iniciar servidor (producción) |
-| `npm test` | Ejecutar tests con Jest |
+| `npm run dev` | Servidor local con nodemon |
+| `npm start` | Servidor local (producción) |
+| `npm test` | Tests con Jest (38 tests, 6 suites) |
 
 ## API
 
-| Endpoint | Descripción |
-|----------|-------------|
-| `GET /` | Página principal (home.html) |
-| `GET /form.html` | Formulario de publicación |
-| `GET /detail` | Detalle de producto |
-| `/api/ventas` | CRUD de productos/ventas |
-| `/api/suscripciones` | Gestión de suscripciones |
-| `/api/correo` | Funcionalidades de correo |
+| Endpoint | Método | Descripción |
+|----------|--------|-------------|
+| `GET /` | HTML | Página principal (home.html) |
+| `GET /form.html` | HTML | Formulario de publicación |
+| `GET /detail` | HTML | Detalle de producto |
+| `/api/ventas` | GET/POST/PUT/DELETE | CRUD de productos |
+| `/api/suscripciones` | GET/POST/PUT/DELETE | CRUD de suscripciones |
+| `/api/correo` | GET/POST | Gestión de correo |
+| `/api/uploads/presigned` | GET | Obtener presigned URL para subir imagen a S3 |
+
+## Workflows (GitHub Actions)
+
+| Workflow | Trigger | Descripción |
+|----------|---------|-------------|
+| **CI** | Push/PR a `main` | `npm test` |
+| **Deploy** | Push a `main` | Lambda → S3 → invalida CloudFront |
+| **Security** | Push/PR a `main` | `npm audit` + CodeQL + Gitleaks |
 
 ## MCP GitHub Automation
 
@@ -113,12 +120,12 @@ npm test
 - Framework: **Jest**
 - HTTP testing: **Supertest**
 - `app.js` exportado específicamente para testing
-- Tests de frontend en `__test__/`
-- Tests de backend en `__testBackend__/`
+- Tests de frontend en `__tests__/`
+- Tests de backend en `__testsBackend__/`
 
 ## Notas
 
-- Servidor corre en puerto **3000**
-- Archivos estáticos servidos desde `public/`
-- Imágenes subidas almacenadas en `uploads/`
-- Variables de entorno manejadas con dotenv
+- Local: puerto **3000**; Producción: Lambda + API Gateway
+- Frontend servido desde S3 vía CloudFront
+- Imágenes subidas a S3 mediante presigned URLs
+- URL pública: `https://d3oxqm7f3a7rlu.cloudfront.net`

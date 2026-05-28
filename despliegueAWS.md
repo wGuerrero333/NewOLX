@@ -62,6 +62,14 @@ Usuario → CloudFront (d3oxqm7f3a7rlu.cloudfront.net)
 | Frontend + API | `https://d3oxqm7f3a7rlu.cloudfront.net` |
 | API Gateway directa | `https://eqy6od44k3.execute-api.us-east-2.amazonaws.com` |
 
+## Workflows GitHub Actions
+
+| Workflow | Archivo | Disparador | Acción |
+|----------|---------|------------|--------|
+| **CI** | `ci.yml` | Push/PR a `main` | `npm test` — ejecuta tests |
+| **Deploy** | `deploy.yml` | Push a `main` | Empaqueta Lambda → `update-function-code` → `s3 sync` → invalida CloudFront |
+| **Security** | `security.yml` | Push/PR a `main` | `npm audit` + CodeQL (análisis estático) + Gitleaks (secret scanning) |
+
 ## Comandos Útiles
 
 ```bash
